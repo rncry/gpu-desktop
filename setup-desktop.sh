@@ -1,4 +1,7 @@
 #!/bin/bash
+echo "$1"
+echo "$2@$3"
+ssh -i "$1" -l "$2" -t "$3" bash -c "'
 sudo yum update -y
 sudo setenforce 0
 sudo yum install -y wget
@@ -13,13 +16,21 @@ sudo rpm -ivh VirtualGL-2.3.91.x86_64.rpm
 wget http://us.download.nvidia.com/XFree86/Linux-x86_64/346.47/NVIDIA-Linux-x86_64-346.47.run
 chmod +x NVIDIA-Linux-x86_64-346.47.run
 sudo rpm -e xorg-x11-drivers xorg-x11-drv-nouveau
-sudo ./NVIDIA-Linux-x86_64-346.47.run -s -Z -z
+sudo ./NVIDIA-Linux-x86_64-346.47.run -s -Z
+sudo reboot
+'"
+
+while ! ssh -i "$1" -l "$2" -t "$3" bash -c "echo 'hi world'" &>/dev/null; do :; done
+
+ssh -i "$1" -l "$2" -t "$3" bash -c "'
+sudo ./NVIDIA-Linux-x86_64-346.47.run -s
 sudo /opt/VirtualGL/bin/vglserver_config -config +s +f +t
 wget https://github.com/rncry/gpu-desktop/raw/master/xorg.conf
 sudo cp xorg.conf /etc/X11/xorg.conf
 sudo xinit
 export PASS=` < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-8};echo;`
 echo "$PASS" | /opt/TurboVNC/bin/vncpasswd -f
+touch $HOME/.vnc/passwd
 echo "$PASS" | /opt/TurboVNC/bin/vncpasswd -f >> $HOME/.vnc/passwd
 chmod 600 ~/.vnc/passwd
 sudo iptables -I INPUT -p tcp --dport 5901 -j ACCEPT
@@ -27,9 +38,9 @@ sudo iptables -I INPUT -p tcp --dport 5801 -j ACCEPT
 sudo iptables-save
 wget https://github.com/rncry/gpu-desktop/raw/master/.Xclients
 chmod +x .Xclients
-sudo touch /etc/X11/xinit/Xclients.d/mate.sh
-sudo chmod 666 /etc/X11/xinit/Xclients.d/mate.sh
-sudo echo "mate-session" >> /etc/X11/xinit/Xclients.d/mate.sh
+cp .Xclients $HOME/.
 /opt/TurboVNC/bin/vncserver
 echo "vnc password: $PASS"
+
+'"
 
