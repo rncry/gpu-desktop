@@ -9,7 +9,7 @@ wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
 sudo rpm -ivh epel-release-7-5.noarch.rpm
 sudo yum groups install -y "X Window System" "MATE Desktop"
 wget http://virtualgl.sourceforge.net/vgl.nightly/VirtualGL-2.3.91.x86_64.rpm
-wget http://turbovnc.sourceforge.net/vnc.nightly/turbovnc-1.2.80.x86_64.rpm
+wget https://github.com/rncry/gpu-desktop/raw/master/turbovnc-1.2.80.x86_64.rpm
 sudo yum install -y libXaw libXmu libXt xauth xdpyinfo glx-utils libXp xterm xorg-x11-xdm  xorg-x11-fonts-100dpi xorg-x11-fonts-ISO8859-9-100dpi xorg-x11-fonts-misc xorg-x11-fonts-Type1 gcc kernel-devel libGLU
 sudo rpm -ivh turbovnc-1.2.80.x86_64.rpm
 sudo rpm -ivh VirtualGL-2.3.91.x86_64.rpm
