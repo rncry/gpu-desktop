@@ -42,6 +42,8 @@ sudo xinit &
 sudo iptables -I INPUT -p tcp --dport 5901 -j ACCEPT
 sudo iptables -I INPUT -p tcp --dport 5801 -j ACCEPT
 sudo iptables-save
+echo "$4" | /opt/TurboVNC/bin/vncpasswd -f >> ~$2/.vnc/passwd
+chmod 600 ~$2/.vnc/passwd
 /opt/TurboVNC/bin/vncserver
 
 '"
