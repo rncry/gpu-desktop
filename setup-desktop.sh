@@ -39,12 +39,19 @@ while ! ssh -i "$1" -l "$2" -t "$3" bash -c "echo 'hi world'" &>/dev/null; do :;
 
 ssh -i "$1" -l "$2" -t "$3" bash -c "'
 sudo xinit &
+echo "$4" | /opt/TurboVNC/bin/vncpasswd -f >> passwd
+chmod 600 passwd
+mkdir -p ~/.vnc
+cp passwd ~/.vnc/
+sudo reboot
+'"
+
+while ! ssh -i "$1" -l "$2" -t "$3" bash -c "echo 'hi world'" &>/dev/null; do :; done
+
+ssh -i "$1" -l "$2" -t "$3" bash -c "'
 sudo iptables -I INPUT -p tcp --dport 5901 -j ACCEPT
 sudo iptables -I INPUT -p tcp --dport 5801 -j ACCEPT
 sudo iptables-save
-echo "$4" | /opt/TurboVNC/bin/vncpasswd -f >> ~$2/.vnc/passwd
-chmod 600 ~$2/.vnc/passwd
-/opt/TurboVNC/bin/vncserver
-
 '"
 
+ssh -i "$1" -l "$2" "$3" '/opt/TurboVNC/bin/vncserver'
