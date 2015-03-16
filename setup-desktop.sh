@@ -21,9 +21,10 @@ sudo reboot
 
 while ! ssh -i "$1" -l "$2" -t "$3" bash -c "echo 'hi world'" &>/dev/null; do :; done
 
+ssh -i "$1" -l "$2" -t "$3" 'sudo yum groups install -y "X Window System"'
+
 ssh -i "$1" -l "$2" -t "$3" bash -c "'
 sudo setenforce 0
-sudo yum groups install -y "X Window System"
 sudo ./NVIDIA-Linux-x86_64-346.47.run -s
 sudo /opt/VirtualGL/bin/vglserver_config -config +s +f +t
 wget https://github.com/rncry/gpu-desktop/raw/master/xorg.conf
