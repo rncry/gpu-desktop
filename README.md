@@ -59,8 +59,24 @@ For example here's glxgears:
 
 Now go install Blender or Maya and get to work!
 
+## Restarting
+
+If you restart your instance you'll need to log in via ssh and do the following:
+
+```
+sudo iptables -I INPUT -p tcp --dport 5901 -j ACCEPT
+sudo iptables -I INPUT -p tcp --dport 5801 -j ACCEPT
+sudo iptables-save
+sudo xinit &
+/opt/TurboVNC/bin/vncserver
+```
+
 ## Future Work
 
+Stuff that needs doing that I haven't had time to do yet:
+
+* Fix iptables on reboot
+* Run vncserver as a service
 * Have the desktop announce itself as a service to consul (or etcd or your favourite flavour of service discovery).
 * Test running as a service on a Mesos cluster.
 * Package up as an AMI/Docker container (not sure how viable running X servers in Docker is from initial attempts)
