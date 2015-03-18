@@ -1,6 +1,6 @@
 # GPU Accelerated Linux Cloud Desktop 
 As part of my day job I've been looking into running OpenGL capable Linux based cloud desktops. Currently it seems
-no vendor offers this as a solution (Amazon appears to be working on it) so I had to roll my own.
+no vendor offers this as a solution so I had to roll my own.
 
 I'm hoping this will be useful to someone, and I hope the open source community can build on this work to make something awesome!
 
